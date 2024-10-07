@@ -23,13 +23,18 @@ body > .ticker-container > .ticker:hover {
 }
 
 body > .ticker-container > .ticker > .name {
+    max-width: 5rem;
     font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 body > .ticker-container > .ticker > .spring {
     flex-grow: 1;
 }
 
+body > .ticker-container > .ticker > .market,
 body > .ticker-container > .ticker > .code {
     background-color: #424242;
     border-radius: 0.25rem;
