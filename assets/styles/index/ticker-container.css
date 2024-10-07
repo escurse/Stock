@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+body > .ticker-container {
+    grid-row: 1/3;
+}
+
+

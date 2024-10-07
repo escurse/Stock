@@ -1,8 +1,8 @@
 @charset "UTF-8";
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
-@import url("/assets/index/chart-wrapper.css");
-@import url("/assets/index/table-wrapper.css");
-@import url("/assets/index/ticker-container.css");
+@import "./index/chart-wrapper.css";
+@import "./index/table-wrapper.css";
+@import "./index/ticker-container.css";
 
 body {
     width: 100vw;
@@ -20,6 +20,11 @@ body {
     gap: 1rem;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr 1fr;
+}
+
+body > .box {
+    background-color: #424242;
+    border-radius: 0.25rem;
 }
 
 ol, ul {
