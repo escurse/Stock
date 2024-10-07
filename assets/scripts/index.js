@@ -1,3 +1,8 @@
+const $loading = document.body.querySelector(':scope > .loading');
+
+const showLoading = () => $loading.classList.add('--visible');
+const hideLoading = () => $loading.classList.remove('--visible');
+
 const loadTickers = () => {
     const $tickerContainer = document.body.querySelector('.ticker-container')
     const xhr = new XMLHttpRequest();
