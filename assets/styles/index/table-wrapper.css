@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+body > .table-wrapper > .table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+
+
+
+

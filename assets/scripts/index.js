@@ -10,6 +10,7 @@ const loadTickers = () => {
         if (xhr.readyState !== XMLHttpRequest.DONE) {
             return;
         }
+        hideLoading();
         if (xhr.status < 200 || xhr.status >= 300) {
             // TODO 실패 처리 로직 작성
             return;
@@ -35,13 +36,19 @@ const loadTickers = () => {
             $ticker.classList.add('ticker');
             $ticker.append($name, $spring, $market, $code);
             $ticker.dataset.code = tickerObject['srtnCd'];
+            $ticker.addEventListener('click', () => {
+               alert($ticker.dataset.code);
+            });
             $tickerContainer.append($ticker);
         }
     };
     xhr.open('GET', 'https://apis.data.go.kr/1160100/service/GetKrxListedInfoService/getItemInfo?serviceKey=ubb%2BOlxX6eAciwn9CaiIjTmsvyt9xeGbp85%2FLfcs2R8QhQMQjQ6uFIXGbgrx60fI4VmYtKoj5UkMGbIsBkaeew%3D%3D&resultType=json&numOfRows=1000')
     xhr.send();
     $tickerContainer.innerHTML = '';
+    showLoading();
 };
+
+loadTickers();
 
 
 

@@ -17,19 +17,37 @@
     <img src="./assets/images/loading-image.png" alt="" class="image">
     <span class="text">잠시만 기다려 주세요.</span>
 </div>
-<ul class="box ticker-container">
-    <li class="ticker">
-        <span class="name">삼성전자</span>
-        <span class="spring"></span>
-        <span class="market">KOSPI</span>
-        <span class="code">A005930</span>
-    </li>
-</ul>
+<ul class="box ticker-container"></ul>
 <section class="box chart-wrapper">
     차트 자리
 </section>
 <section class="box table-wrapper">
-    테이블 자리
+    <table class="table">
+        <colgroup>
+            <col>
+            <col span="4">
+            <col span="2">
+            <col span="2">
+        </colgroup>
+        <thead>
+        <tr>
+            <th rowspan="2" scope="col">날짜</th>
+            <th colspan="4" scope="col">시세</th>
+            <th colspan="2" scope="col">등락</th>
+            <th colspan="2" scope="col">거래</th>
+        </tr>
+        <tr>
+            <th scope="col">시가</th>
+            <th scope="col">고가</th>
+            <th scope="col">저가</th>
+            <th scope="col">종가</th>
+            <th scope="col">원</th>
+            <th scope="col">%</th>
+            <th scope="col">거래량</th>
+            <th scope="col">거래대금</th>
+        </tr>
+        </thead>
+    </table>
 </section>
 
 </body>

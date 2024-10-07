@@ -8,6 +8,7 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: #212121;
+    box-sizing: border-box;
     color: #ffffff;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     font-size: 0.9rem;
@@ -30,6 +31,7 @@ body > .loading {
     backdrop-filter: blur(1rem);
     background-color: #212121a0;
     opacity: 0;
+    pointer-events: none;
     position: fixed;
     transition-duration: 250ms;
     transition-property: opacity;
