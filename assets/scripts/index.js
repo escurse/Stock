@@ -37,7 +37,7 @@ const loadTickers = () => {
             $ticker.append($name, $spring, $market, $code);
             $ticker.dataset.code = tickerObject['srtnCd'];
             $ticker.addEventListener('click', () => {
-               alert($ticker.dataset.code);
+               loadData($ticker.dataset.code.replace('A',''));
             });
             $tickerContainer.append($ticker);
         }
@@ -45,6 +45,61 @@ const loadTickers = () => {
     xhr.open('GET', 'https://apis.data.go.kr/1160100/service/GetKrxListedInfoService/getItemInfo?serviceKey=ubb%2BOlxX6eAciwn9CaiIjTmsvyt9xeGbp85%2FLfcs2R8QhQMQjQ6uFIXGbgrx60fI4VmYtKoj5UkMGbIsBkaeew%3D%3D&resultType=json&numOfRows=1000')
     xhr.send();
     $tickerContainer.innerHTML = '';
+    showLoading();
+};
+
+const loadData = (code) => {
+    const $table = document.body.querySelector(':scope > .table-wrapper > .table')
+    const $tbody = $table.querySelector(':scope > tbody')
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
+            return;
+        }
+        hideLoading();
+        if (xhr.status < 200 || xhr.status >=300) {
+            return;
+        }
+        const response = JSON.parse(xhr.responseText);
+        if (response['response']['header']['resultCode'] !== '00') {
+            return;
+        }
+        for (const dataObject of response['response']['body']['items']['item']) {
+            const $dateTh = document.createElement('th');
+            $dateTh.innerText = `${dataObject['basDt'].substring(0, 4)}-${dataObject['basDt'].substring(4, 6)}-${dataObject['basDt'].substring(6, 8)}`;
+            const $openTd = document.createElement('td');
+            $openTd.innerText = parseInt(dataObject['mkp']).toLocaleString();
+            const $highTd = document.createElement('td');
+            $highTd.innerText = parseInt(dataObject['hipr']).toLocaleString();
+            const $lowTd = document.createElement('td');
+            $lowTd.innerText = parseInt(dataObject['lopr']).toLocaleString();
+            const $closeTd = document.createElement('td');
+            $closeTd.innerText = parseInt(dataObject['clpr']).toLocaleString();
+            const change = parseInt(dataObject['vs']);
+            const $changeTd = document.createElement('td');
+            $changeTd.innerText = (change > 0 ? '+' : '') + change.toLocaleString();
+            $changeTd.classList.add('change');
+            const changePct = parseFloat(dataObject['fltRt']);
+            const $changePctTd = document.createElement('td');
+            $changePctTd.innerText = (changePct > 0 ? '+' : '') + changePct + '%';
+            $changePctTd.classList.add('change');
+            const $volumeTd = document.createElement('td');
+            $volumeTd.innerText = parseInt(dataObject['trqu']).toLocaleString();
+            const $tradeCapTd = document.createElement('td');
+            $tradeCapTd.innerText = parseInt(dataObject['trPrc']).toLocaleString();
+            const $tr = document.createElement('tr');
+            $tr.append($dateTh, $openTd, $highTd, $lowTd, $closeTd, $changeTd, $changePctTd, $volumeTd, $tradeCapTd);
+            if (change > 0) {
+                $tr.classList.add('up');
+            } else if (change < 0) {
+                $tr.classList.add('down');
+            }
+            $tbody.append($tr);
+        }
+    };
+    xhr.open('GET', `https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=ubb%2BOlxX6eAciwn9CaiIjTmsvyt9xeGbp85%2FLfcs2R8QhQMQjQ6uFIXGbgrx60fI4VmYtKoj5UkMGbIsBkaeew%3D%3D&resultType=json&numOfRows=1000&likeSrtnCd=${code}`);
+    xhr.send();
+    $tbody.innerHTML = '';
     showLoading();
 };
 
