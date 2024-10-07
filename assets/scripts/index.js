@@ -104,7 +104,3 @@ const loadData = (code) => {
 };
 
 loadTickers();
-
-
-
-
