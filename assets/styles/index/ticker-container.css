@@ -2,6 +2,7 @@
 
 body > .ticker-container {
     grid-row: 1/3;
+    overflow: hidden auto;
 }
 
 body > .ticker-container > .ticker {
