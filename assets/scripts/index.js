@@ -128,17 +128,68 @@ const loadData = (code) => {
                 id: 'ohlc',
                 toolbar: {
                     autoSelected: 'pan',
-                    show: true
+                    show: true,
                 },
                 zoom: {
                     enabled: false
                 },
             },
             xaxis: {
-                type: 'datetime'
+                type: 'datetime',
+                axisBorder: {color: '#424242'},
+                lables: {style: {colors: ['#ffffff']}}
             },
+            yaxis: {
+                opposite: true,
+            },
+            grid: {borderColor: '#424242'}
         };
-
+        const volumeChartOption = {
+            series: [{
+                data: volumeData
+            }],
+            chart: {
+                height: 160,
+                type: 'bar',
+                brush: {
+                    enabled: true,
+                    target: 'ohlc'
+                },
+                selection: {
+                    enabled: true,
+                    xaxis: {
+                        min: (new Date()).getTime() - (24 * 60 * 60 * 1000) * 100,
+                        // 차트 초기 세팅시 x축 시작 값을 100일 전으로 설정하기 위한 값
+                        max: new Date().getTime()
+                        // 차트 초기 세팅시 x축 끝값을 오늘 날짜로 지정하기 위한 값
+                    },
+                    fill: {
+                        color: '#bdbdbd',
+                        opacity: 0.4
+                    },
+                    stroke: {
+                        color: '#3498db'
+                    },
+                },
+            },
+            dataLabels: {enabled: false},
+            stroke: {width: 0},
+            xaxis: {
+                type: 'datetime',
+                axisBorder: {color: '#424242'}
+            },
+            yaxis: {
+                labels: {show: false}
+            },
+            grid: {show: false}
+        };
+        const $chartWrapper = document.body.querySelector(':scope > .chart-wrapper');
+        const $ohlcChart = $chartWrapper.querySelector(':scope > .chart.ohlc');
+        const $volumeChart = $chartWrapper.querySelector(':scope > .chart.volume');
+        const ohlcChart = new ApexCharts($ohlcChart, ohlcChartOption);
+        const volumeChart = new ApexCharts($volumeChart, volumeChartOption);
+        ohlcChart.render();
+        volumeChart.render();
     };
     xhr.open('GET', `https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=ubb%2BOlxX6eAciwn9CaiIjTmsvyt9xeGbp85%2FLfcs2R8QhQMQjQ6uFIXGbgrx60fI4VmYtKoj5UkMGbIsBkaeew%3D%3D&resultType=json&numOfRows=1000&likeSrtnCd=${code}`);
     xhr.send();
