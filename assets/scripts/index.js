@@ -4,7 +4,7 @@ const showLoading = () => $loading.classList.add('--visible');
 const hideLoading = () => $loading.classList.remove('--visible');
 
 const loadTickers = () => {
-    const $tickerContainer = document.body.querySelector('.ticker-container')
+    const $tickerContainer = document.body.querySelector('.ticker-container');
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
         if (xhr.readyState !== XMLHttpRequest.DONE) {
@@ -137,10 +137,11 @@ const loadData = (code) => {
             xaxis: {
                 type: 'datetime',
                 axisBorder: {color: '#424242'},
-                lables: {style: {colors: ['#ffffff']}}
+                labels: {style: {colors: '#ffffff'}}
             },
             yaxis: {
                 opposite: true,
+                labels: {style: {colors:'#ffffff'}}
             },
             grid: {borderColor: '#424242'}
         };
