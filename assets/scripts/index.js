@@ -96,6 +96,49 @@ const loadData = (code) => {
             }
             $tbody.append($tr);
         }
+        const ohlcData = []; // 주가 정보(시, 고, 저, 종가)를 담을 배열
+        const volumeData = []; // 거래량을 담을 배열
+        response['response']['body']['items']['item'].reverse().forEach((x) => {
+            const year = parseInt(x['basDt'].substring(0, 4));
+            const month = parseInt(x['basDt'].substring(4, 6)) - 1; // JS의 Date 객체가 가지는 월(月)은 0부터 11까지임으로 1을 빼준다.
+            const day = parseInt(x['basDt'].substring(6, 8));
+            const timestamp = new Date(year, month, day); // JS의 Date 객체를 인자없이 객체화하면 객체화하는 그 때의 날짜/시간을 가진다.
+                                                                // 이것처럼 각 년, 월, 시, 분, 초 값을 임의로 할당하여 원하는 날짜/시간을 가지게 할 수 있다.
+            const open = parseInt(x['mkp']);
+            const high = parseInt(x['hipr']);
+            const low = parseInt(x['lopr']);
+            const close = parseInt(x['clpr']);
+            const volume = parseInt(x['trqu']);
+            ohlcData.push({
+                x: timestamp.getTime(),
+                y: [open, high, low, close]
+            });
+            volumeData.push({
+                x: timestamp.getTime(),
+                y: volume
+            });
+        });
+        const ohlcChartOption = {
+            series: [{
+                data: ohlcData
+            }],
+            chart: {
+                type: 'candlestick',
+                height: '100%',
+                id: 'ohlc',
+                toolbar: {
+                    autoSelected: 'pan',
+                    show: true
+                },
+                zoom: {
+                    enabled: false
+                },
+            },
+            xaxis: {
+                type: 'datetime'
+            },
+        };
+
     };
     xhr.open('GET', `https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=ubb%2BOlxX6eAciwn9CaiIjTmsvyt9xeGbp85%2FLfcs2R8QhQMQjQ6uFIXGbgrx60fI4VmYtKoj5UkMGbIsBkaeew%3D%3D&resultType=json&numOfRows=1000&likeSrtnCd=${code}`);
     xhr.send();
